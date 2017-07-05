@@ -1,18 +1,33 @@
 import config , {logStars} from './config';
 import http from 'http';
 import express from 'express';
-const server  = express();
 import fs from 'fs';
+import apiRouter from './api';
+
+
+// create server from express module
+const server  = express();
+
 
 // express server response routing '/'
 server.get('/',(req,res) => {
   res.send('Hello Express');
 });
 
-// serve the route './about.html'
-server.get('/about.html', (req,res) => {
-  res.send('The about age');
-});
+// // serve the route './about.html'
+// server.get('/about.html', (req,res) => {
+//   // res.send('The about age');
+//   fs.readFile('./about.html',(err, data) =>{
+//     res.send(data.toString());
+//   });
+// });
+// the above response can be simplified by the express static
+// serving files under public directory automatically.
+// this is a example of using express middleware
+server.use(express.static('public'));
+
+server.use('/api',apiRouter);
+
 
 //express server listen on port 8080
 server.listen(config.port,() => {
