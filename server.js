@@ -8,10 +8,13 @@ import apiRouter from './api';
 // create server from express module
 const server  = express();
 
-
+server.set('view engine', 'ejs');
 // express server response routing '/'
 server.get('/',(req,res) => {
-  res.send('Hello Express');
+  // res.send('Hello Express');
+  res.render('index',{
+    content:'Hello Exress and <em>EJS<em>'
+  });
 });
 
 // // serve the route './about.html'
