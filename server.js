@@ -1,21 +1,20 @@
-import config , {logStars} from './config';
-import http from 'http';
-import express from 'express';
-import fs from 'fs';
+
+
+import config from './config';
 import apiRouter from './api';
 
-
-// create server from express module
-const server  = express();
+import express from 'express';
+const server = express();
 
 server.set('view engine', 'ejs');
-// express server response routing '/'
-server.get('/',(req,res) => {
-  // res.send('Hello Express');
-  res.render('index',{
-    content:'Hello Exress and <em>EJS<em>'
+
+server.get('/', (req, res) => {
+  res.render('index', {
+    content: '...'
   });
 });
+
+// create server from express module
 
 // // serve the route './about.html'
 // server.get('/about.html', (req,res) => {
@@ -27,16 +26,14 @@ server.get('/',(req,res) => {
 // the above response can be simplified by the express static
 // serving files under public directory automatically.
 // this is a example of using express middleware
+
+server.use('/api', apiRouter);
 server.use(express.static('public'));
 
-server.use('/api',apiRouter);
-
-
 //express server listen on port 8080
-server.listen(config.port,() => {
-  console.info('Express listenning on port', config.port);
+server.listen(config.port, () => {
+  console.info('Express listening on port', config.port);
 });
-
 
 /** below is the example of using https module as client **/
 // http.get('http://lynda.com',res=>{
